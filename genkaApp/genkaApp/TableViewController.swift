@@ -12,7 +12,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet weak var tableView: UITableView!
     
     var foodName: [String] = []
-   // var costs: [Int] = [100, 200, 150]
+    var costs: [Int] = []
     
     //データ保存ローカルの設定
     let userDefaults = UserDefaults.standard
@@ -22,6 +22,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         // データ読み込み
         UserDefaults.standard.string(forKey: "foodName")
+        UserDefaults.standard.integer(forKey: "costs")
         
         
         tableView.delegate = self
@@ -39,7 +40,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 }
 
                 destination.selectProduct = foodName[indexPath.row]
-//                destination.productCost = costs[indexPath.row]
+                destination.productCost = costs[indexPath.row]
             }
         }
     }
@@ -59,6 +60,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
             
             // 追加した内容を保存
             self.userDefaults.set(self.foodName, forKey: "foodName")
+            
         }
         
         alert.addAction(action)
