@@ -21,9 +21,9 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         super.viewDidLoad()
         
         // データ読み込み
-        UserDefaults.standard.string(forKey: "foodName")
-        UserDefaults.standard.integer(forKey: "costs")
-        
+        if let storedFoodList = userDefaults.array(forKey: "foodName") as? [String] {
+            foodName.append(contentsOf: storedFoodList)
+        }
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -52,15 +52,14 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
             self.foodName.append(textField.text!)
             self.tableView.reloadData()
             print(self.foodName)
-        
+
+            // 追加した内容を保存
+            self.userDefaults.set(self.foodName, forKey: "foodName")
+            self.userDefaults.synchronize()
         }
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "アイテムを入力"
             textField = alertTextField
-            
-            // 追加した内容を保存
-            self.userDefaults.set(self.foodName, forKey: "foodName")
-            
         }
         
         alert.addAction(action)
